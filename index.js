@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import cors from "cors"
 
 import userRoute from "./src/routes/user.js"
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => res.send("hello world"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors());
 
 app.use(userRoute)
 
