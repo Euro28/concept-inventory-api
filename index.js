@@ -2,11 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
 import userRoute from "./src/routes/user.js";
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 const port = 5000;
