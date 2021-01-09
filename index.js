@@ -25,6 +25,6 @@ app.get("/", (req, res) => res.send("hello world"));
 // app.use(cookieParser());
 // app.use(userRoute);
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log("test running at port " + port);
 });
