@@ -17,6 +17,7 @@ const dbOptions = {
   useUnifiedTopology: true,
 };
 
+cors({credentials: true, origin:true})
 const connection = mongoose.connect(process.env.DB, dbOptions);
 
 app.get("/", (req, res) => res.send("hello world"));
