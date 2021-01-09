@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
+import userRoute from "./src/routes/user.js"
+
 dotenv.config();
 
 const app = express();
@@ -18,21 +20,11 @@ const connection = mongoose.connect(process.env.DB, dbOptions);
 
 app.get("/", (req, res) => res.send("hello world"));
 
-const router = express.Router();
-
-router.get("/api/results", async (req, res) => {
-  try {
-    res.status(200).send("this is return from /api/results");
-  } catch (err) {
-    res.status(401).send(err);
-  }
-});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(router)
+app.use(userRoute)
 
 app.listen(process.env.PORT || port, () => {
   console.log("test running at port " + port);
