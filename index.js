@@ -17,16 +17,16 @@ const dbOptions = {
   useUnifiedTopology: true,
 };
 
-const corsOptions = {
-  origin: ["http://localhost:3000"],
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: ["http://localhost:3000"],
+//   credentials: true,
+// };
 
 const connection = mongoose.connect(process.env.DB, dbOptions);
 
 app.get("/", (req, res) => res.send("hello world"));
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
