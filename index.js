@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import userRoute from "./src/routes/user.js";
 
@@ -40,6 +41,8 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+
+app.use(cors({ credentials: true }));
 
 app.get("/", (req, res) => res.send("hello world"));
 
