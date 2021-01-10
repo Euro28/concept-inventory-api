@@ -34,7 +34,9 @@ router.post("/api/register", async (req, res) => {
 
 router.post("/api/login", async (req, res) => {
   try {
+    console.log("req.query.name", req.query.name)
     const user = await user.findOne({ name: req.query.name });
+    console.log("user", user)
     if (!user) {
       res.status(204).send();
     } else {
