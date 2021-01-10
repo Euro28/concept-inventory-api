@@ -65,17 +65,25 @@ router.get("/api/results", getUser, async (req, res) => {
 
 router.post("/api/results", async (req, res) => {
   try {
-    const { name } = req.query
-    const { results } = req.body
-    const user = await User.findOne({ name })
+    const { name } = req.query;
+    const { results } = req.body;
+    const user = await User.findOne({ name });
     user.results = results;
 
-    await user.save()
+    await user.save();
 
-    res.status(200).send(user)
+    res.status(200).send(user);
   } catch (err) {
-    res.status(401).send(err)
+    res.status(401).send(err);
   }
-})
+});
+
+router.post("/api/logout", (req, res) => {
+  try {
+    res.clearCookie("name").send();
+  } catch (err) {
+    res.status(500).send();
+  }
+});
 
 export default router;
