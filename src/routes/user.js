@@ -9,6 +9,8 @@ router.use(cookieParser())
 
 router.get("/api/results", async (req, res) => {
   try {
+    console.log(req.query)
+    console.log(req.params)
     console.log("req.body", req.body.name)
     console.log("the pure cookies are ", req.headers.cookie)
     const { name } = req.cookies;
