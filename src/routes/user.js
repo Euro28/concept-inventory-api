@@ -9,6 +9,7 @@ router.use(cookieParser())
 
 router.get("/api/results", async (req, res) => {
   try {
+    console.log("the pure cookies are ", req.headers.cookie)
     const { name } = req.cookies;
     console.log("the name received in cookie is", name)
     const user = await User.findOne({ name });
