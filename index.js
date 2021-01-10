@@ -19,7 +19,7 @@ const dbOptions = {
 const connection = mongoose.connect(process.env.DB, dbOptions);
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
 
   // Request methods you wish to allow
   res.setHeader(
@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
   // Request headers you wish to allow
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
 
   // Set to true if you need the website to include cookies in the requests sent
