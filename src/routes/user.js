@@ -6,12 +6,12 @@ const router = express.Router();
 
 const getUser = async (req, res, next) => {
   try {
-    const name = req.query;
+    const { name } = req.query;
     const user = await User.findOne({ name });
     if (user) {
       req.query.user = user;
     }
-    next()
+    next();
   } catch (err) {
     res.status(401).send(err);
   }
@@ -26,7 +26,7 @@ router.post("/api/register", getUser, async (req, res) => {
 
 router.get("/api/results", getUser, async (req, res) => {
   try {
-    console.log("req.query.user", req.query.user)
+    console.log("req.query.user", req.query.user);
     const { name } = req.query;
     const user = await User.findOne({ name });
     res.status(200).send(user.results);
