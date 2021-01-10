@@ -78,11 +78,17 @@ router.post("/api/results", async (req, res) => {
   }
 });
 
-router.post("/api/logout", (req, res) => {
+router.patch("/api/takenQuiz", async (req, res) => {
   try {
-    res.clearCookie("name").send();
+    const { name } = req.query;
+    const user = await User.findOne({ name });
+    user.takenQuiz = true;
+
+    await user.save();
+
+    res.status(200).send(user);
   } catch (err) {
-    res.status(500).send();
+    res.status(401).send(err);
   }
 });
 
