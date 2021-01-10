@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import cors from "cors";
 
 import userRoute from "./src/routes/user.js";
 
@@ -20,7 +19,7 @@ const dbOptions = {
 const connection = mongoose.connect(process.env.DB, dbOptions);
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
 
   // Request methods you wish to allow
   res.setHeader(
@@ -41,8 +40,6 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-
-app.use(cors({ credentials: true }));
 
 app.get("/", (req, res) => res.send("hello world"));
 
