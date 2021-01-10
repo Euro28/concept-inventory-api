@@ -17,22 +17,23 @@ const getUser = async (req, res, next) => {
   }
 };
 
-router.post("/api/register", getUser, async (req, res) => {
+router.post("/api/register", async (req, res) => {
   try {
-    if (req.query.user) {
-      res.status(409).send("User already exists")
+    const exists = await User.findOne({ name: req.body.name });
+    if (exists) {
+      res.status(409).send("User already exists");
     } else {
-      const user = new User(req.query.user)
-      await user.save()
+      const user = new User(req.body);
+      await user.save();
       res.status(201).send(user);
     }
   } catch (err) {
-    res.status(500).send("Failed to register user")
+    res.status(500).send("Failed to register user");
   }
 });
 
 router.get("/api/results", getUser, async (req, res) => {
-  try { 
+  try {
     // const { name } = req.query;
     // const user = await User.findOne({ name });
     res.status(200).send(req.query.user.results);
