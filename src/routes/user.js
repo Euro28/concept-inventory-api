@@ -32,6 +32,25 @@ router.post("/api/register", async (req, res) => {
   }
 });
 
+router.post("/api/login", async (req, res) => {
+  try {
+    const user = await user.findOne({ name: req.query.name });
+    if (!user) {
+      res.status(204).send();
+    } else {
+      res
+        .status(200)
+        .cookie("name", user.name, {
+          maxAge: 1000 * 60 * 10,
+          httpOnly: false,
+        })
+        .send({ user });
+    }
+  } catch (err) {
+    res.status(401).send(err);
+  }
+});
+
 router.get("/api/results", getUser, async (req, res) => {
   try {
     // const { name } = req.query;
