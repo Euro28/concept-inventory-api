@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import userRoute from "./src/routes/user.js";
-import questionRoute from "./src/routes/question.js"
+import questionRoute from "./src/routes/question.js";
 import cors from "./src/cors.js";
 
 dotenv.config();
@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 //routes
 app.use(userRoute);
-app.use(questionRoute)
+app.use(questionRoute);
 
 app.listen(process.env.PORT || port, () => {
   console.log("test running at port " + port);
