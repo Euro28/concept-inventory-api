@@ -5,7 +5,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import userRoute from "./src/routes/user.js";
-import cors from "./src/cors.js"
+import questionRoute from "./src/routes/question.js"
+import cors from "./src/cors.js";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ const dbOptions = {
   useUnifiedTopology: true,
 };
 
-const connection = mongoose.connect(process.env.DB, dbOptions);
+mongoose.connect(process.env.DB, dbOptions);
 
 //middleware
 app.use(cors);
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 //routes
 app.use(userRoute);
+app.use(questionRoute)
 
 app.listen(process.env.PORT || port, () => {
   console.log("test running at port " + port);
