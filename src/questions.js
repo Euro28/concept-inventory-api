@@ -26,8 +26,7 @@ const json = {
        "value": "set-3",
        "text": "{} = {{}}"
       }
-     ],
-     "colCount": 0
+     ]
     },
     {
      "type": "radiogroup",
@@ -55,8 +54,7 @@ const json = {
        "value": "implication-4",
        "text": "All the cards"
       }
-     ],
-     "colCount": 0
+     ]
     },
     {
      "type": "image",
@@ -140,8 +138,7 @@ const json = {
        "value": "denial of antecedent-1",
        "text": "None of the above"
       }
-     ],
-     "colCount": 5
+     ]
     },
     {
      "type": "html",
@@ -184,8 +181,7 @@ const json = {
        "value": "item2",
        "text": "c"
       }
-     ],
-     "colCount": 5
+     ]
     },
     {
      "type": "html",
@@ -220,8 +216,7 @@ const json = {
        "value": "d",
        "text": "None of the above"
       }
-     ],
-     "colCount": 5
+     ]
     },
     {
      "type": "html",
@@ -256,8 +251,7 @@ const json = {
        "value": "d",
        "text": "None of the above"
       }
-     ],
-     "colCount": 5
+     ]
     },
     {
      "type": "html",
@@ -292,8 +286,7 @@ const json = {
        "value": "d",
        "text": "None of the above"
       }
-     ],
-     "colCount": 5
+     ]
     },
     {
      "type": "html",
@@ -328,8 +321,7 @@ const json = {
        "value": "d",
        "text": "None of the above"
       }
-     ],
-     "colCount": 5
+     ]
     },
     {
      "type": "html",
@@ -359,8 +351,7 @@ const json = {
        "value": "d",
        "text": "p,q both false"
       }
-     ],
-     "colCount": 0
+     ]
     },
     {
      "type": "image",
@@ -395,8 +386,7 @@ const json = {
        "value": "e",
        "text": "x <= -2 or 2 <= x or -1 < x < 1"
       }
-     ],
-     "colCount": 0
+     ]
     },
     {
      "type": "radiogroup",
@@ -424,8 +414,7 @@ const json = {
        "value": "e",
        "text": "None of the above"
       }
-     ],
-     "colCount": 0
+     ]
     }
    ]
   }
