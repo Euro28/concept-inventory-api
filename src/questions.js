@@ -100,12 +100,6 @@ const json = {
           colCount: 0,
         },
         {
-          type: "html",
-          name: "question1",
-          html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\rightarrow&space;q&space;\\newline&space;\\indent&space;p" title="\\huge \\neg p \\rightarrow q \\newline \\indent p" />',
-        },
-        {
           type: "checkbox",
           name: "question13",
           minWidth: "",
@@ -151,9 +145,10 @@ const json = {
         },
         {
           type: "html",
-          name: "question14",
+          name: "question1",
+          startWithNewLine: false,
           html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\rightarrow&space;\\neg&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge \\neg p \\rightarrow \\neg q \\newline \\indent \\neg q" />',
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\rightarrow&space;q&space;\\newline&space;\\indent&space;p" title="\\huge \\neg p \\rightarrow q \\newline \\indent p" />',
         },
         {
           type: "checkbox",
@@ -197,9 +192,10 @@ const json = {
         },
         {
           type: "html",
-          name: "question6",
+          name: "question14",
+          startWithNewLine: false,
           html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\lor&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge \\neg p \\lor q \\newline \\indent \\neg q" />',
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\rightarrow&space;\\neg&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge \\neg p \\rightarrow \\neg q \\newline \\indent \\neg q" />',
         },
         {
           type: "checkbox",
@@ -235,9 +231,10 @@ const json = {
         },
         {
           type: "html",
-          name: "question8",
+          name: "question6",
+          startWithNewLine: false,
           html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;p&space;\\lor&space;\\neg&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge p \\lor \\neg q \\newline \\indent \\neg q" />',
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\lor&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge \\neg p \\lor q \\newline \\indent \\neg q" />',
         },
         {
           type: "checkbox",
@@ -273,9 +270,10 @@ const json = {
         },
         {
           type: "html",
-          name: "question7",
+          name: "question8",
+          startWithNewLine: false,
           html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;p&space;\\rightarrow&space;q&space;\\newline&space;\\indent&space;p" title="\\huge p \\rightarrow q \\newline \\indent p" />',
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;p&space;\\lor&space;\\neg&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge p \\lor \\neg q \\newline \\indent \\neg q" />',
         },
         {
           type: "checkbox",
@@ -311,9 +309,10 @@ const json = {
         },
         {
           type: "html",
-          name: "question11",
+          name: "question7",
+          startWithNewLine: false,
           html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;p&space;\\rightarrow&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge p \\rightarrow q \\newline \\indent \\neg q" />',
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;p&space;\\rightarrow&space;q&space;\\newline&space;\\indent&space;p" title="\\huge p \\rightarrow q \\newline \\indent p" />',
         },
         {
           type: "checkbox",
@@ -349,9 +348,10 @@ const json = {
         },
         {
           type: "html",
-          name: "question2",
+          name: "question11",
+          startWithNewLine: false,
           html:
-            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\leftrightarrow&space;q" title="\\huge \\neg p \\leftrightarrow q" />',
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;p&space;\\rightarrow&space;q&space;\\newline&space;\\indent&space;\\neg&space;q" title="\\huge p \\rightarrow q \\newline \\indent \\neg q" />',
         },
         {
           type: "checkbox",
@@ -379,6 +379,13 @@ const json = {
             },
           ],
           colCount: 0,
+        },
+        {
+          type: "html",
+          name: "question2",
+          startWithNewLine: false,
+          html:
+            '<img src="https://latex.codecogs.com/gif.latex?\\inline&space;\\dpi{200}&space;\\huge&space;\\neg&space;p&space;\\leftrightarrow&space;q" title="\\huge \\neg p \\leftrightarrow q" />',
         },
         {
           type: "image",
