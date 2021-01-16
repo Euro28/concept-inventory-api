@@ -1,4 +1,5 @@
 import express from "express";
+import axios from "axios";
 
 import User from "../models/User.js";
 
@@ -65,6 +66,10 @@ router.get("/api/results", getUser, async (req, res) => {
 
 router.post("/api/results", async (req, res) => {
   try {
+    //get actual survey and get array of objects where first
+    //field of object is question value and second is array of correct answers
+    const quiz = axios.get("https://concept-api2.herokuapp.com/api/questions");
+    console.log(quiz[0]);
     const { name } = req.query;
     const { results } = req.body;
     const user = await User.findOne({ name });

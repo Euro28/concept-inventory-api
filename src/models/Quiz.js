@@ -42,22 +42,23 @@ const pageSchema = new Schema({
 const quizSchema = new Schema({
   title: {
     type: String,
-    unique: true,
+    //unique: true,
     trim: true,
-    match: [/^[a-zA-Z0-9]+$/, "name is invalid"],
+    match: [/^[a-zA-Z0-9z\s]+$/, "name is invalid"],
     required: true,
   },
   maxTimeToFinish: {
     type: Number,
     default: 10000,
   },
-  pages: [{
-
-  name: {
-    type: String,
-  },
-  elements: [questionSchema],
-  }],
+  pages: [
+    {
+      name: {
+        type: String,
+      },
+      elements: [questionSchema],
+    },
+  ],
 });
 
 const Quiz = mongoose.model("Quiz", quizSchema);

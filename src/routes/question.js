@@ -17,17 +17,10 @@ router.get("/api/questions", async (req, res) => {
 router.patch("/api/questions", async (req, res) => {
   try {
     const { question, title } = req.body;
-    const quiz = await Quiz.findOne({ title })
-      .lean()
-      .exec((err, doc) => {
-        if (err || !doc) {
-          res.status(401).send("did not find document");
-        }
+    const quiz = await Quiz.findOne({ title });
 
-        const elements = doc.pages[0].elements;
-        elements.push(question);
-        res.json(doc);
-      });
+    quiz.pages[0].elements.push(question);
+    await quiz.save();
 
     res.status(200).send(quiz);
   } catch (err) {
