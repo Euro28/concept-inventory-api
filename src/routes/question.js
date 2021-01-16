@@ -1,7 +1,5 @@
 import express from "express";
 
-import JSON from "../questions.js";
-
 const router = express.Router();
 
 import Quiz from "../models/Quiz.js";
