@@ -7,11 +7,15 @@ const conceptSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
   explanation: {
-    type:String,
-    required:true,
-    trim:true
-  }
-})
+    type: String,
+    required: true,
+    trim: true,
+  },
+});
+
+const Concept = mongoose.model("Concept", conceptSchema);
+
+export default Concept;
