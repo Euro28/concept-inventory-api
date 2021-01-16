@@ -42,9 +42,9 @@ const pageSchema = new Schema({
 const quizSchema = new Schema({
   title: {
     type: String,
-    unique: true,
+    //unique: true,
     trim: true,
-    match: [/^[a-zA-Z0-9]+$/, "name is invalid"],
+    match: [/^[a-zA-Z0-9z\s]+$/, "name is invalid"],
     required: true,
   },
   maxTimeToFinish: {
