@@ -14,21 +14,23 @@ router.get("/api/questions", async (req, res) => {
   }
 });
 
-router.patch("/api/questions", async (req,res) => {
+router.patch("/api/questions", async (req, res) => {
   try {
     const { question, title } = req.body;
-    const quiz = await Quiz.find({title})
-    
+    console.log(title);
+    console.log(question);
+    const quiz = await Quiz.find({ title });
+
+    console.log("Quiz ", quiz);
     quiz.pages[0].elements.push(question);
 
     await quiz.save();
 
     res.status(200).send(quiz);
-  } catch(err) {
+  } catch (err) {
     res.status(500).send(err);
-
   }
-})
+});
 
 router.get("/api/concepts", async (req, res) => {
   try {
