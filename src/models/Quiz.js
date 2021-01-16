@@ -51,13 +51,14 @@ const quizSchema = new Schema({
     type: Number,
     default: 10000,
   },
-  pages: [{
-
-  name: {
-    type: String,
-  },
-  elements: [questionSchema],
-  }],
+  pages: [
+    {
+      name: {
+        type: String,
+      },
+      elements: [questionSchema],
+    },
+  ],
 });
 
 const Quiz = mongoose.model("Quiz", quizSchema);
