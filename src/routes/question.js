@@ -34,14 +34,15 @@ router.patch("/api/questions/remove", async (req, res) => {
 
     const quiz = await Quiz.findOne({ title: quizTitle });
 
-    const removedQuestion = quiz.pages[0].elements.filter(ques => ques.title !== title)
+    const removedQuestion = quiz.pages[0].elements.filter(
+      (ques) => ques.title !== title
+    );
 
     quiz.pages[0].elements = removedQuestion;
 
     await quiz.save();
 
     res.status(200).send(quiz);
-
   } catch (err) {
     res.status(500).send(err);
   }

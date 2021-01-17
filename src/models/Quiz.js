@@ -30,6 +30,10 @@ const questionSchema = new Schema({
     default: true,
   },
   choices: [answerSchema],
+  misconception: {
+    type: String,
+    required: true
+  }
 });
 
 const pageSchema = new Schema({

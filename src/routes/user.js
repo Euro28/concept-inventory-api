@@ -68,10 +68,21 @@ router.post("/api/results", async (req, res) => {
   try {
     //get actual survey and get array of objects where first
     //field of object is question value and second is array of correct answers
-    const quiz = axios.get("https://concept-api2.herokuapp.com/api/questions");
-    console.log(quiz[0]);
+    const quiz = await axios.get(
+      "https://concept-api2.herokuapp.com/api/questions"
+    );
+    console.log(
+      quiz.data[0].pages[0].elements.map((question) => ({
+        correct: question.correctAnswer,
+        questionValue: question.valueName
+      }))
+    );
+
     const { name } = req.query;
     const { results } = req.body;
+
+    console.log(results);
+
     const user = await User.findOne({ name });
     user.results = results;
 

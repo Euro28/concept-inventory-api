@@ -19,6 +19,8 @@ const dbOptions = {
 };
 
 mongoose.connect(process.env.DB, dbOptions);
+mongoose.set("useCreateIndex", true)
+
 
 //middleware
 app.use(cors);
