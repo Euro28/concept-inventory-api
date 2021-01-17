@@ -32,8 +32,8 @@ const questionSchema = new Schema({
   choices: [answerSchema],
   misconception: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const pageSchema = new Schema({

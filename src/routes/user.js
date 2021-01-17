@@ -1,6 +1,8 @@
 import express from "express";
 import axios from "axios";
 
+import array from "lodash/array.js";
+
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -56,32 +58,44 @@ router.post("/api/login", async (req, res) => {
 
 router.get("/api/results", getUser, async (req, res) => {
   try {
-    // const { name } = req.query;
-    // const user = await User.findOne({ name });
     res.status(200).send(req.query.user.results);
   } catch (err) {
     res.status(401).send(err);
   }
 });
 
+//this actually returns if two arrays of strings are equal (order not mattering)
+const arrEq = (correct, given) => {
+  const diff = array.intersection(correct, given);
+  return diff.length === correct.length && correct.length === given.length;
+};
+
 router.post("/api/results", async (req, res) => {
   try {
-    //get actual survey and get array of objects where first
-    //field of object is question value and second is array of correct answers
     const quiz = await axios.get(
       "https://concept-api2.herokuapp.com/api/questions"
-    );
-    console.log(
-      quiz.data[0].pages[0].elements.map((question) => ({
-        correct: question.correctAnswer,
-        questionValue: question.valueName
-      }))
     );
 
     const { name } = req.query;
     const { results } = req.body;
 
-    console.log(results);
+    const comparison = quiz.data[0].pages[0].elements.map((ans) => ({
+      misconception: ans.misconception,
+      correct: arrEq(ans.correctAnswer, results[ans.valueName]),
+    }));
+
+    const concepts = array.uniq(comparison.map((ques) => ques.misconception));
+
+    const count = {};
+
+    concepts.forEach((concept) => {
+      count[concept] = { total: 0, correct: 0 };
+    });
+
+    comparison.forEach((ans) => {
+      count[ans.misconception].total++;
+      if (ans.correct) count[ans.misconception].correct++;
+    });
 
     const user = await User.findOne({ name });
     user.results = results;
@@ -90,6 +104,7 @@ router.post("/api/results", async (req, res) => {
 
     res.status(200).send(user);
   } catch (err) {
+    console.log("caught err: ", err);
     res.status(401).send(err);
   }
 });
