@@ -28,6 +28,25 @@ router.patch("/api/questions", async (req, res) => {
   }
 });
 
+router.patch("/api/questions/remove", async (req, res) => {
+  try {
+    const { quizTitle, title } = req.body;
+
+    const quiz = await Quiz.findOne({ title: quizTitle });
+
+    const removedQuestion = quiz.pages[0].elements.filter(ques => ques.title !== title)
+
+    quiz.pages[0].elements = removedQuestion;
+
+    await quiz.save();
+
+    res.status(200).send(quiz);
+
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 router.get("/api/concepts", async (req, res) => {
   try {
     const concepts = await Concept.find({});
