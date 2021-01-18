@@ -64,38 +64,9 @@ router.get("/api/results", getUser, async (req, res) => {
   }
 });
 
-//this actually returns if two arrays of strings are equal (order not mattering)
-const arrEq = (correct, given) => {
-  const diff = array.intersection(correct, given);
-  return diff.length === correct.length && correct.length === given.length;
-};
-
-router.post("/api/results", async (req, res) => {
   try {
-    const quiz = await axios.get(
-      "https://concept-api2.herokuapp.com/api/questions"
-    );
-
     const { name } = req.query;
     const { results } = req.body;
-
-    const comparison = quiz.data[0].pages[0].elements.map((ans) => ({
-      misconception: ans.misconception,
-      correct: arrEq(ans.correctAnswer, results[ans.valueName]),
-    }));
-
-    const concepts = array.uniq(comparison.map((ques) => ques.misconception));
-
-    const count = {};
-
-    concepts.forEach((concept) => {
-      count[concept] = { total: 0, correct: 0 };
-    });
-
-    comparison.forEach((ans) => {
-      count[ans.misconception].total++;
-      if (ans.correct) count[ans.misconception].correct++;
-    });
 
     const user = await User.findOne({ name });
     user.results = results;
@@ -104,7 +75,6 @@ router.post("/api/results", async (req, res) => {
 
     res.status(200).send(user);
   } catch (err) {
-    console.log("caught err: ", err);
     res.status(401).send(err);
   }
 });
