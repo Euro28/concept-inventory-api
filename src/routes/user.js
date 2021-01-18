@@ -1,8 +1,6 @@
 import express from "express";
 import axios from "axios";
 
-import array from "lodash/array.js";
-
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -64,15 +62,12 @@ router.get("/api/results", getUser, async (req, res) => {
   }
 });
 
+router.post("/api/results", getUser, async (req, res) => {
   try {
-    const { name } = req.query;
     const { results } = req.body;
 
-    const user = await User.findOne({ name });
-    user.results = results;
-
-    await user.save();
-
+    req.query.user.results = results;
+    await req.query.user.save();
     res.status(200).send(user);
   } catch (err) {
     res.status(401).send(err);
