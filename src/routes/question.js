@@ -51,7 +51,8 @@ router.patch("/api/questions/remove", async (req, res) => {
 router.get("/api/concepts", async (req, res) => {
   try {
     const concepts = await Concept.find({});
-    res.status(200).send(concepts);
+    const formattedConcepts = concepts.map(concept => ({ [concept.concept]: concept.explanation}))
+    res.status(200).send(formattedConcepts);
   } catch (err) {
     rse.status(401).send(err);
   }
