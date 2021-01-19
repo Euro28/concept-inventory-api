@@ -79,8 +79,10 @@ router.post("/api/results", getUser, async (req, res) => {
       misconception: question.misconception,
       correct: correctAns(question.correctAnswer, results[question.valueName]),
     }));
+    console.log(correct);
 
-    const concepts = array.uniq(correct.map((ques) => question.misconception));
+    const concepts = array.uniq(correct.map((ques) => ques.misconception));
+    console.log(concepts);
     const count = {};
 
     concepts.forEach((concept) => (count[concept] = { total: 0, correct: 0 }));
