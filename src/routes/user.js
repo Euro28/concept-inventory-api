@@ -1,6 +1,6 @@
 import express from "express";
 import axios from "axios";
-import array from "lodash/array";
+import array from "lodash/array.js";
 
 import User from "../models/User.js";
 
@@ -80,16 +80,15 @@ router.post("/api/results", getUser, async (req, res) => {
       correct: correctAns(question.correctAnswer, results[question.valueName]),
     }));
 
-    const concepts = array.uniq(correct.map(ques => question.misconception));
+    const concepts = array.uniq(correct.map((ques) => question.misconception));
     const count = {};
 
-    concepts.forEach(concept => (count[concept] = { total: 0, correct: 0 }))
+    concepts.forEach((concept) => (count[concept] = { total: 0, correct: 0 }));
 
-    correct.forEach(ans => {
+    correct.forEach((ans) => {
       count[ans.misconception].total++;
-      if (ans.correct) count[ans.misconception].correct++
-    })
-
+      if (ans.correct) count[ans.misconception].correct++;
+    });
 
     req.query.user.results = count;
     await req.query.user.save();
