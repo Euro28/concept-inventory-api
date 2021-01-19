@@ -112,4 +112,22 @@ router.patch("/api/takenQuiz", async (req, res) => {
   }
 });
 
+router.get("/api/allResults", async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    const allResults = allUsers.map((user) => ({ results: user.results }));
+
+    const totalResults = allResults.reduce((total, result) => {
+      Object.keys(result.results).forEach((concept) => {
+        acc[concept].total += concept.total;
+        acc[concept].correct += concept.correct;
+      });
+    }, {});
+
+    res.status(200).send(totalResults);
+  } catch (err) {
+    res.status(401).send(err);
+  }
+});
+
 export default router;

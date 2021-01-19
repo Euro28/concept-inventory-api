@@ -82,18 +82,4 @@ router.patch("/api/concepts", async (req, res) => {
   }
 });
 
-// router.patch("/api/concepts", async (req, res) => {
-//   try {
-//     const { concept, explanation } = req.body;
-//     const editedConcept = await Concept.findOne({ concept });
-//     editedConcept.explanation = explanation;
-
-//     await editedConcept.save();
-
-//     res.status(200).send(editedConcept);
-//   } catch (err) {
-//     res.status(401).send(err);
-//   }
-// });
-
 export default router;
