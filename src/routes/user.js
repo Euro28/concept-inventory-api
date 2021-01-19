@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import array from "lodash/array";
 
 import User from "../models/User.js";
 
@@ -62,13 +63,37 @@ router.get("/api/results", getUser, async (req, res) => {
   }
 });
 
+const correctAns = (correct, given) => {
+  const diff = array.intersection(correct, given);
+  return diff.length === correct.length && correct.length === given.length;
+};
+
 router.post("/api/results", getUser, async (req, res) => {
   try {
     const { results } = req.body;
+    const questions = await axios.get("/api/questions");
 
-    req.query.user.results = results;
+    const allConcepts = await axios.get("/api/concepts");
+
+    const correct = questions.data[0].pages[0].elements.map((question) => ({
+      misconception: question.misconception,
+      correct: correctAns(question.correctAnswer, results[question.valueName]),
+    }));
+
+    const concepts = array.uniq(correct.map(ques => question.misconception));
+    const count = {};
+
+    concepts.forEach(concept => (count[concept] = { total: 0, correct: 0 }))
+
+    correct.forEach(ans => {
+      count[ans.misconception].total++;
+      if (ans.correct) count[ans.misconception].correct++
+    })
+
+
+    req.query.user.results = count;
     await req.query.user.save();
-    res.status(200).send(user);
+    res.status(200).send(count);
   } catch (err) {
     res.status(401).send(err);
   }

@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import axios from "axios";
 
 import userRoute from "./src/routes/user.js";
 import questionRoute from "./src/routes/question.js";
 import cors from "./src/cors.js";
 
 dotenv.config();
+axios.defaults.baseURL = "https://concept-api2.herokuapp.com"
 
 const app = express();
 const port = 5000;
