@@ -8,8 +8,12 @@ const router = express.Router();
 
 const getUser = async (req, res, next) => {
   try {
-    const { name } = req.query;
-    const user = await User.findOne({ name });
+    const {
+      name
+    } = req.query;
+    const user = await User.findOne({
+      name
+    });
     if (user) {
       req.query.user = user;
     }
@@ -21,7 +25,9 @@ const getUser = async (req, res, next) => {
 
 router.post("/api/register", async (req, res) => {
   try {
-    const exists = await User.findOne({ name: req.body.name });
+    const exists = await User.findOne({
+      name: req.body.name
+    });
     if (exists) {
       res.status(409).send("User already exists");
     } else {
@@ -38,7 +44,9 @@ router.post("/api/login", async (req, res) => {
   try {
     if (req.query.name) req.body.name = req.query.name;
 
-    const user = await User.findOne({ name: req.body.name });
+    const user = await User.findOne({
+      name: req.body.name
+    });
     if (!user) {
       res.status(204).send();
     } else {
@@ -48,7 +56,9 @@ router.post("/api/login", async (req, res) => {
           maxAge: 1000 * 60 * 10,
           httpOnly: false,
         })
-        .send({ user });
+        .send({
+          user
+        });
     }
   } catch (err) {
     res.status(401).send(err);
@@ -70,7 +80,9 @@ const correctAns = (correct, given) => {
 
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    const { results } = req.body;
+    const {
+      results
+    } = req.body;
     const questions = await axios.get("/api/questions");
 
     const allConcepts = await axios.get("/api/concepts");
@@ -83,7 +95,10 @@ router.post("/api/results", getUser, async (req, res) => {
     const concepts = array.uniq(correct.map((ques) => ques.misconception));
     const count = {};
 
-    concepts.forEach((concept) => (count[concept] = { total: 0, correct: 0 }));
+    concepts.forEach((concept) => (count[concept] = {
+      total: 0,
+      correct: 0
+    }));
 
     correct.forEach((ans) => {
       count[ans.misconception].total++;
@@ -100,8 +115,12 @@ router.post("/api/results", getUser, async (req, res) => {
 
 router.patch("/api/takenQuiz", async (req, res) => {
   try {
-    const { name } = req.query;
-    const user = await User.findOne({ name });
+    const {
+      name
+    } = req.query;
+    const user = await User.findOne({
+      name
+    });
     user.takenQuiz = true;
 
     await user.save();
@@ -115,16 +134,18 @@ router.patch("/api/takenQuiz", async (req, res) => {
 router.get("/api/allResults", async (req, res) => {
   try {
     const allUsers = await User.find();
-    const allResults = allUsers.map((user) => ({ results: user.results }));
+    const allResults = allUsers.map((user) => ({
+      results: user.results
+    }));
 
-    const totalResults = allResults.reduce((total, result) => {
-      Object.keys(result.results).forEach((concept) => {
-        acc[concept].total += concept.total;
-        acc[concept].correct += concept.correct;
-      });
-    }, {});
+    //const totalResults = allResults.reduce((total, result) => {
+    //Object.keys(result.results).forEach((concept) => {
+    //acc[concept].total += concept.total;
+    //acc[concept].correct += concept.correct;
+    //});
+    //}, {});
 
-    res.status(200).send(totalResults);
+    res.status(200).send(allResults);
   } catch (err) {
     res.status(401).send(err);
   }
