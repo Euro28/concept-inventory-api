@@ -136,12 +136,10 @@ router.patch("/api/takenQuiz", async (req, res) => {
 router.get("/api/allResults", async (req, res) => {
   try {
     const allUsers = await User.find();
-    const allResults = allUsers
-      .filter(user => !user.isAdmin)
-      .map(user) => ({
-        results: user.results,
-        name: user.name
-      });
+    const allResults = allUsers.filter(user => !user.isAdmin).map(user => ({
+      results: user.results,
+      name: user.name
+    }));
 
     res.status(200).send(allResults);
   } catch (err) {
