@@ -78,8 +78,16 @@ const correctAns = (correct, given) => {
   return diff.length === correct.length && correct.length === given.length;
 };
 
+
 const markResults = async (results) => {
-  const concepts = array.uniq(results.map(ques => ques.misconception))
+  const questions = await axios.get("/api/questions");
+
+  const correct = questions.data[0].pages[0].elements.map((question) => ({
+    misconception: question.misconception,
+    correct: correctAns(question.correctAnswer, results[question.valueName]),
+  }));
+
+  const concepts = array.uniq(correct.map(ques => ques.misconception))
   const count = {};
 
   concepts.forEach(concept => (count[concept] = {
@@ -87,7 +95,7 @@ const markResults = async (results) => {
     correct: 0
   }))
 
-  results.forEach(ans => {
+  correct.forEach(ans => {
     count[ans.misconception].total++;
     if (ans.correct) count[ans.misconception].correct++;
   })
@@ -97,23 +105,11 @@ const markResults = async (results) => {
 
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    const {
-      results
-    } = req.body;
-    const questions = await axios.get("/api/questions");
+    const markedResults = await markResults(req.body.results)
+    req.query.user.results = markedResults
 
-    const correct = questions.data[0].pages[0].elements.map((question) => ({
-      misconception: question.misconception,
-      correct: correctAns(question.correctAnswer, results[question.valueName]),
-    }));
-
-    const markedResults = markResults(correct);
-
-
-
-    req.query.user.results = markedResults;
     await req.query.user.save();
-    res.status(200).send(markedResults);
+    res.status(200).send(req.query.user);
   } catch (err) {
     res.status(401).send(err);
   }
