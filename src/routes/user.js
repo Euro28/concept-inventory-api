@@ -1,6 +1,4 @@
 import express from "express";
-import axios from "axios";
-import array from "lodash/array.js";
 
 import User from "../models/User.js";
 
@@ -8,11 +6,9 @@ const router = express.Router();
 
 const getUser = async (req, res, next) => {
   try {
-    const {
-      name
-    } = req.query;
+    const { name } = req.query;
     const user = await User.findOne({
-      name
+      name,
     });
     if (user) {
       req.query.user = user;
@@ -26,7 +22,7 @@ const getUser = async (req, res, next) => {
 router.post("/api/register", async (req, res) => {
   try {
     const exists = await User.findOne({
-      name: req.body.name
+      name: req.body.name,
     });
     if (exists) {
       res.status(409).send("User already exists");
@@ -45,7 +41,7 @@ router.post("/api/login", async (req, res) => {
     if (req.query.name) req.body.name = req.query.name;
 
     const user = await User.findOne({
-      name: req.body.name
+      name: req.body.name,
     });
     if (!user) {
       res.status(204).send();
@@ -57,7 +53,7 @@ router.post("/api/login", async (req, res) => {
           httpOnly: false,
         })
         .send({
-          user
+          user,
         });
     }
   } catch (err) {
@@ -73,40 +69,10 @@ router.get("/api/results", getUser, async (req, res) => {
   }
 });
 
-const correctAns = (correct, given) => {
-  const diff = array.intersection(correct, given);
-  return diff.length === correct.length && correct.length === given.length;
-};
-
-
-const markResults = async (results) => {
-  const questions = await axios.get("/api/questions");
-
-  const correct = questions.data[0].pages[0].elements.map((question) => ({
-    misconception: question.misconception,
-    correct: correctAns(question.correctAnswer, results[question.valueName]),
-  }));
-
-  const concepts = array.uniq(correct.map(ques => ques.misconception))
-  const count = {};
-
-  concepts.forEach(concept => (count[concept] = {
-    total: 0,
-    correct: 0
-  }))
-
-  correct.forEach(ans => {
-    count[ans.misconception].total++;
-    if (ans.correct) count[ans.misconception].correct++;
-  })
-
-  return count;
-}
-
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    const markedResults = await markResults(req.body.results)
-    req.query.user.results = markedResults
+    //const markedResults = await markResults(req.body.results)
+    req.query.user.results = req.body.results;
 
     await req.query.user.save();
     res.status(200).send(req.query.user);
@@ -117,11 +83,9 @@ router.post("/api/results", getUser, async (req, res) => {
 
 router.patch("/api/takenQuiz", async (req, res) => {
   try {
-    const {
-      name
-    } = req.query;
+    const { name } = req.query;
     const user = await User.findOne({
-      name
+      name,
     });
     user.takenQuiz = true;
 
@@ -136,10 +100,12 @@ router.patch("/api/takenQuiz", async (req, res) => {
 router.get("/api/allResults", async (req, res) => {
   try {
     const allUsers = await User.find();
-    const allResults = allUsers.filter(user => !user.isAdmin).map(user => ({
-      results: user.results,
-      name: user.name
-    }));
+    const allResults = allUsers
+      .filter((user) => !user.isAdmin)
+      .map((user) => ({
+        results: user.results,
+        name: user.name,
+      }));
 
     res.status(200).send(allResults);
   } catch (err) {
