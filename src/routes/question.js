@@ -16,13 +16,10 @@ router.get("/api/questions", async (req, res) => {
 
 router.patch("/api/questions", async (req, res) => {
   try {
-    console.log(req.body)
-    const { question, title } = req.body;
-    console.log(question);
-    console.log(title);
+    const { newQuestion, title } = req.body;
     const quiz = await Quiz.findOne({ title });
 
-    quiz.pages[0].elements.push(question);
+    quiz.pages[0].elements.push(newQuestion);
     await quiz.save();
 
     res.status(200).send(quiz);
