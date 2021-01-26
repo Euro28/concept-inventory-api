@@ -34,6 +34,10 @@ const questionSchema = new Schema({
     type: String,
     required: true,
   },
+  explanation: {
+    type: String,
+    required: true,
+  }
 });
 
 const pageSchema = new Schema({
