@@ -17,6 +17,8 @@ router.get("/api/questions", async (req, res) => {
 router.patch("/api/questions", async (req, res) => {
   try {
     const { question, title } = req.body;
+    console.log(question);
+    console.log(title);
     const quiz = await Quiz.findOne({ title });
 
     quiz.pages[0].elements.push(question);
