@@ -123,17 +123,17 @@ router.get("/api/userConcepts", getUser, async (req, res) => {
   }
 });
 
-router.patch("/api/setUserConcepts", getUser, async (req,res) => {
+router.patch("/api/setUserConcepts", getUser, async (req, res) => {
   try {
-    const {concepts} = req.body
-    req.query.user.conceptsToTake = concepts
+    const { concepts } = req.body;
+    req.query.user.conceptsToTake = concepts;
 
     await req.query.user.save();
 
-    res.status(200).send(req.query.user)
+    res.status(200).send(req.query.user);
   } catch (err) {
-    res.status(401).send(err)
+    res.status(401).send(err);
   }
-})
+});
 
 export default router;

@@ -10,7 +10,7 @@ const userSchema = new Schema({
     match: [/^[a-zA-Z0-9]+$/, "name is invalid"],
     required: true,
   },
-  results: {},
+  results: [],
   takenQuiz: {
     type: Boolean,
     required: true,
