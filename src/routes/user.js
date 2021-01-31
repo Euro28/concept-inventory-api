@@ -113,4 +113,14 @@ router.get("/api/allResults", async (req, res) => {
   }
 });
 
+router.get("/api/userConcepts", getUser, async (req, res) => {
+  try {
+    const userConcepts = req.query.user.conceptsToTake
+
+    res.status(200).send(userConcepts)
+  } catch (err) {
+    res.status(401).send(err)
+  }
+})
+
 export default router;
