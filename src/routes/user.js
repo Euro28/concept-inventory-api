@@ -115,9 +115,22 @@ router.get("/api/allResults", async (req, res) => {
 
 router.get("/api/userConcepts", getUser, async (req, res) => {
   try {
-    const userConcepts = req.query.user.conceptsToTake
+    const userConcepts = req.query.user.conceptsToTake;
 
-    res.status(200).send(userConcepts)
+    res.status(200).send(userConcepts);
+  } catch (err) {
+    res.status(401).send(err);
+  }
+});
+
+router.patch("/api/setUserConcepts", getUser, async (req,res) => {
+  try {
+    const {concepts} = req.body
+    req.query.user.conceptsToTake = concepts
+
+    await req.query.user.save();
+
+    res.status(200).send(req.query.user)
   } catch (err) {
     res.status(401).send(err)
   }
