@@ -21,9 +21,11 @@ const userSchema = new Schema({
     default: false,
     required: true,
   },
-  conceptsToTake: [{
+  conceptsToTake: [
+    {
       type: String,
-    }],
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

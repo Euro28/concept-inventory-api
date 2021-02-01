@@ -71,7 +71,7 @@ router.get("/api/results", getUser, async (req, res) => {
 
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    req.query.user.results = req.body.results;
+    req.query.user.results.push(req.body.results);
 
     await req.query.user.save();
     res.status(200).send(req.query.user);
