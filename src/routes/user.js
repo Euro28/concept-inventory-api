@@ -71,7 +71,6 @@ router.get("/api/results", getUser, async (req, res) => {
 
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    //const markedResults = await markResults(req.body.results)
     req.query.user.results = req.body.results;
 
     await req.query.user.save();
