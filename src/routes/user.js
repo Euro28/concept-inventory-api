@@ -82,11 +82,10 @@ router.post("/api/results", getUser, async (req, res) => {
 
 router.patch("/api/takenQuiz", async (req, res) => {
   try {
-    const { name } = req.query;
     const user = await User.findOne({
-      name,
+      name: req.query.name,
     });
-    user.takenQuiz = true;
+    user.takenQuiz = req.body.taken;
 
     await user.save();
 
