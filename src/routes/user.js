@@ -31,10 +31,10 @@ router.post("/api/register", async (req, res) => {
       const allQuizzes = await Quiz.find();
       const user = new User(req.body);
 
-      const userConceptsDefault = allQuizzes.map(quiz => ({
+      const userConceptsDefault = allQuizzes.map((quiz) => ({
         title: quiz.title,
-        concepts: quiz.concepts
-      }))
+        concepts: quiz.concepts,
+      }));
 
       user.conceptsToTake = userConceptsDefault;
       await user.save();
@@ -132,8 +132,20 @@ router.get("/api/userConcepts", getUser, async (req, res) => {
 
 router.patch("/api/setUserConcepts", getUser, async (req, res) => {
   try {
-    const { concepts } = req.body;
-    req.query.user.conceptsToTake = concepts;
+    const { concepts, title } = req.body;
+
+    const userConcepts = req.query.user.conceptsToTake;
+    const toChange = userConcepts.map((concept) => {
+      if (concept.title === title) {
+        return {
+          title: concept.title,
+          concepts: concepts,
+        };
+      } else {
+        return concept;
+      }
+    });
+    req.query.user.conceptsToTake = toChange;
 
     await req.query.user.save();
 
