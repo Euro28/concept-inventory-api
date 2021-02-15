@@ -1,6 +1,7 @@
 import express from "express";
 
 import User from "../models/User.js";
+import Quiz from "../models/Quiz.js";
 
 const router = express.Router();
 
@@ -27,7 +28,15 @@ router.post("/api/register", async (req, res) => {
     if (exists) {
       res.status(409).send("User already exists");
     } else {
+      const allQuizzes = await Quiz.find();
       const user = new User(req.body);
+
+      const userConceptsDefault = allQuizzes.map(quiz => ({
+        title: quiz.title,
+        concepts: quiz.concepts
+      }))
+
+      user.conceptsToTake = userConceptsDefault;
       await user.save();
       res.status(201).send(user);
     }
