@@ -20,6 +20,11 @@ router.patch("/api/questions", async (req, res) => {
     const quiz = await Quiz.findOne({ title });
 
     quiz.pages[0].elements.push(question);
+    console.log(question.misconception)
+    console.log(quiz.concepts.includes(question.misconception));
+    if (!quiz.concepts.includes(question.misconception)) {
+      quiz.concepts.push(question.misconception);
+    }
     await quiz.save();
 
     res.status(200).send(quiz);
@@ -95,7 +100,7 @@ router.post("/api/newQuiz", async (req, res) => {
       ],
     });
 
-    await newQuiz.save()
+    await newQuiz.save();
     res.status(201).send(newQuiz);
   } catch (err) {
     res.status(500).send("Failed to create new Concept Inventory");
