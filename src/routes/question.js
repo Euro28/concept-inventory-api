@@ -82,4 +82,24 @@ router.patch("/api/concepts", async (req, res) => {
   }
 });
 
+router.post("/api/newQuiz", async (req, res) => {
+  try {
+    const { title } = req.body;
+    const newQuiz = new Quiz({
+      title,
+      pages: [
+        {
+          name: "page1",
+          elements: [],
+        },
+      ],
+    });
+
+    await newQuiz.save()
+    res.status(201).send(newQuiz);
+  } catch (err) {
+    res.status(500).send("Failed to create new Concept Inventory");
+  }
+});
+
 export default router;
