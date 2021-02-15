@@ -23,7 +23,12 @@ const userSchema = new Schema({
   },
   conceptsToTake: [
     {
-      type: String,
+      title: String,
+      concepts: [{
+
+        type: String,
+      }
+      ]
     },
   ],
 });
