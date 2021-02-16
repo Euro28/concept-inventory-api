@@ -80,7 +80,12 @@ router.get("/api/results", getUser, async (req, res) => {
 
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    req.query.user.results.push(req.body.results);
+    //get results and quiz name
+    const {results, quizTitle } = req.body
+    req.query.user.results.push({
+      quizTitle,
+      quizResults: results
+    })
 
     await req.query.user.save();
     res.status(200).send(req.query.user);
