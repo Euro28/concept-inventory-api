@@ -103,6 +103,7 @@ router.get("/api/allResults", async (req, res) => {
       .map((user) => ({
         results: user.results,
         name: user.name,
+        userClass: user.class
       }));
 
     res.status(200).send(allResults);
