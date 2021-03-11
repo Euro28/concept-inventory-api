@@ -1,6 +1,7 @@
 import express from "express";
 
 import User from "../models/User.js";
+import Quiz from "../models/Quiz.js";
 
 const router = express.Router();
 
@@ -27,7 +28,15 @@ router.post("/api/register", async (req, res) => {
     if (exists) {
       res.status(409).send("User already exists");
     } else {
+      const allQuizzes = await Quiz.find();
       const user = new User(req.body);
+
+      const userConceptsDefault = allQuizzes.map((quiz) => ({
+        title: quiz.title,
+        concepts: quiz.concepts,
+      }));
+
+      user.conceptsToTake = userConceptsDefault;
       await user.save();
       res.status(201).send(user);
     }
@@ -71,7 +80,12 @@ router.get("/api/results", getUser, async (req, res) => {
 
 router.post("/api/results", getUser, async (req, res) => {
   try {
-    req.query.user.results.push(req.body.results);
+    //get results and quiz name
+    const {results, quizTitle } = req.body
+    req.query.user.results.push({
+      quizTitle,
+      quizResults: results
+    })
 
     await req.query.user.save();
     res.status(200).send(req.query.user);
@@ -124,8 +138,20 @@ router.get("/api/userConcepts", getUser, async (req, res) => {
 
 router.patch("/api/setUserConcepts", getUser, async (req, res) => {
   try {
-    const { concepts } = req.body;
-    req.query.user.conceptsToTake = concepts;
+    const { concepts, title } = req.body;
+
+    const userConcepts = req.query.user.conceptsToTake;
+    const toChange = userConcepts.map((concept) => {
+      if (concept.title === title) {
+        return {
+          title: concept.title,
+          concepts: concepts,
+        };
+      } else {
+        return concept;
+      }
+    });
+    req.query.user.conceptsToTake = toChange;
 
     await req.query.user.save();
 

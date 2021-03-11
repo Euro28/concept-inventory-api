@@ -67,6 +67,11 @@ const quizSchema = new Schema({
       elements: [questionSchema],
     },
   ],
+  concepts: [
+    {
+      type: String,
+    }
+  ]
 });
 
 const Quiz = mongoose.model("Quiz", quizSchema);

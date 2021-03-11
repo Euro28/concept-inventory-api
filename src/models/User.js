@@ -10,7 +10,10 @@ const userSchema = new Schema({
     match: [/^[a-zA-Z0-9]+$/, "name is invalid"],
     required: true,
   },
-  results: [],
+  results: [{
+    quizTitle: String,
+    quizResults: {}
+  }],
   takenQuiz: {
     type: Boolean,
     required: true,
@@ -23,7 +26,12 @@ const userSchema = new Schema({
   },
   conceptsToTake: [
     {
-      type: String,
+      title: String,
+      concepts: [{
+
+        type: String,
+      }
+      ]
     },
   ],
 });
